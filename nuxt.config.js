@@ -14,7 +14,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap' }
     ]
   },
   /*
@@ -25,6 +26,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/variables.scss'
   ],
   /*
   ** Plugins to load before mounting the App
