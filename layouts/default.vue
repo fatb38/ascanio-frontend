@@ -1,9 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      fixed
-      app
-    >
+    <v-app-bar>
       <v-spacer />
       <v-img src="/ascanio-logo.png" max-width="40px" />
       <v-spacer />
