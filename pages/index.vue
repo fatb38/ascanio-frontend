@@ -37,7 +37,6 @@
 
 <script>
 export default {
-  name: 'areas',
   async fetch () {
     const request = await this.$axios.get('/api/areas/')
     this.areas = request.data
