@@ -15,7 +15,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Open+Sans:wght@400&display=swap' }
     ]
   },
   /*
@@ -53,7 +53,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://localhost:8080'
+    baseURL: process.env.API_URL || 'http://localhost:8080'
   },
   /*
   ** vuetify module configuration
