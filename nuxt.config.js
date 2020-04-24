@@ -69,7 +69,7 @@ export default {
           accent: colors.grey.darken3,
           secondary: '#2ac0cc',
           info: colors.teal.lighten1,
-          warning: colors.amber.base,
+          warning: colors.amber.accent3,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
         }
