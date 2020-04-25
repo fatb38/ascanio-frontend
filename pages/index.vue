@@ -112,13 +112,15 @@ export default {
         this.pending = true
         await this.$axios.delete(`/api/areas/${area._id}`)
         this.close()
-        this.$nuxt.$emit('snackbar', {
-          message: 'Zone supprimée avec succès', status: 'success'
+        this.$nuxt.$emit('snackbarClient', {
+          message: 'Zone supprimée avec succès',
+          status: 'success'
         })
       } catch (err) {
         this.pending = false
-        this.$nuxt.$emit('snackbar', {
-          message: 'Erreur avec le serveur, impossible de supprimer la zone', status: 'error'
+        this.$nuxt.$emit('snackbarClient', {
+          message: 'Erreur avec le serveur, impossible de supprimer la zone',
+          status: 'error'
         })
       }
     },
