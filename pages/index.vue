@@ -17,7 +17,7 @@
               </v-row>
               <v-row class="mt-3" justify="end">
                 <v-btn color="secondary" small outlined :to="'/'+area._id">détails</v-btn>
-                <v-btn class="mx-3" color="error" outlined small>effacer</v-btn>
+                <v-btn class="mx-3" color="error" outlined small @click="deleteArea(area)">effacer</v-btn>
               </v-row>
             </v-container>
           </v-card>
@@ -48,6 +48,33 @@
         <span>Aucune Zone Géographique enregistrée</span>
       </v-row>
     </v-container>
+
+    <!-- Delete alert modal box -->
+    <v-dialog v-model="deleteAlert" max-width="600">
+      <v-alert
+        border="left"
+        type="error"
+        colored-border
+        elevation="3"
+        class="mb-0"
+      >
+        <span class="font-weight-regular">Etes-vous sûr de vouloir supprimer {{ areaToDelete.name }} ?</span>
+        <v-spacer />
+        <v-btn text :disabled="pending" @click="close">Annuler</v-btn>
+        <v-btn color="error" :disabled="pending" text @click="deleteArea(areaToDelete)">
+          <div v-if="pending">
+            <v-progress-circular
+              indeterminate
+              rotate="4"
+              size="18"
+              width="2"
+              color="error"
+            />
+          </div>
+          <span v-else>Oui</span>
+        </v-btn>
+      </v-alert>
+    </v-dialog>
   </div>
 </template>
 
@@ -57,12 +84,40 @@ export default {
     const { data } = await this.$axios.get('/api/areas/')
     this.areas = data
   },
+
   data () {
     return {
-      areas: []
+      areas: [],
+      deleteAlert: false,
+      pending: false,
+      areaToDelete: {}
     }
   },
+
   methods: {
+    close () {
+      this.refresh()
+      this.pending = false
+      this.deleteAlert = false
+      this.areaToDelete = {}
+    },
+
+    async deleteArea (area) {
+      if (!this.deleteAlert) {
+        this.deleteAlert = true
+        this.areaToDelete = area
+        return
+      }
+      try {
+        this.pending = true
+        await this.$axios.delete(`/api/areas/${area._id}`)
+        this.close()
+      } catch (err) {
+        this.pending = false
+        console.error(err)
+      }
+    },
+
     refresh () {
       this.$fetch()
     }
