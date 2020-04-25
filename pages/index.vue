@@ -1,12 +1,12 @@
 <template>
-
-  <div class="content">
+  <div>
     <h1 class="text-center">Liste des zones géographiques</h1>
     <v-container fluid>
+      <!-- areas display -->
       <v-row v-if="areas.length > 0">
         <v-col v-for="(area, index) in areas" :key="index" cols="12" sm="6" lg="4">
           <v-card hover>
-            <v-card-title class="pb-0">{{ area.name }}</v-card-title>
+            <v-card-title class="pb-0 font-weight-regular">{{ area.name }}</v-card-title>
             <v-container class="pt-0">
               <v-row>
                 <v-subheader>Villes :
@@ -23,6 +23,8 @@
           </v-card>
         </v-col>
       </v-row>
+
+      <!-- Spinner while fetching data -->
       <v-row v-else-if="$fetchState.pending" justify="center">
         <v-progress-circular
           indeterminate
@@ -32,12 +34,16 @@
           color="secondary"
         />
       </v-row>
+
+      <!-- error -->
       <v-row v-else-if="$fetchState.error" justify="center">
         <v-col cols="12" class="text-center">
           <div>Erreur avec le server</div>
         </v-col>
         <v-btn class="ml-3" small color="secondary" outlined @click="refresh">Rafraichir</v-btn>
       </v-row>
+
+      <!-- no date -->
       <v-row v-else justify="center">
         <span>Aucune Zone Géographique enregistrée</span>
       </v-row>
@@ -65,11 +71,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .content {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
-  }
-
   .city {
     display: inline-block;
     margin-left: 4px;
