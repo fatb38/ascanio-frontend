@@ -16,7 +16,7 @@
                 </v-subheader>
               </v-row>
               <v-row class="mt-3" justify="end">
-                <v-btn color="secondary" small outlined>détails</v-btn>
+                <v-btn color="secondary" small outlined :to="'/'+area._id">détails</v-btn>
                 <v-btn class="mx-3" color="error" outlined small>effacer</v-btn>
               </v-row>
             </v-container>
