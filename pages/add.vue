@@ -17,7 +17,13 @@
             hide-details
             label="Entrez le nom d'une ville"
             solo-inverted
+            @change="addCity"
           ></v-autocomplete>
+        </v-row>
+        <v-row>
+          <div class="pic" v-for="(city, index) of cities" :key="index">
+            <img v-for="(image, index2) in city.images" :key="index2" :src="image" :alt="city.name">
+          </div>
         </v-row>
       </v-form>
     </v-container>
@@ -28,12 +34,14 @@
 export default {
   data () {
     return {
+      name: null,
       valid: false,
       loading: false,
       entries: [],
       search: null,
       select: null,
-      cities: []
+      cities: [],
+      imagesIndex: 1
     }
   },
 
@@ -42,11 +50,21 @@ export default {
       return this.entries.map((entry) => {
         return entry.nom
       })
+    },
+    area () {
+      return {
+        name: this.name,
+        cities: this.cities
+      }
     }
   },
 
   watch: {
     async search (val) {
+      if (val === null) {
+        return
+      }
+
       if (val.length === 0) {
         this.entries = []
         return
@@ -67,10 +85,44 @@ export default {
       this.entries = data
       this.loading = false
     }
+  },
+
+  methods: {
+    addCity () {
+      if (this.cities.length < 3 && !this.cities.includes(this.select)) {
+        this.cities.push({
+          name: this.select,
+          images: this.generateImagesUrl()
+        })
+        this.resetSearch()
+      }
+    },
+
+    generateImagesUrl () {
+      const urls = []
+      for (let i = 0; i < 5; i++) {
+        urls.push(`https://picsum.photos/200?random=${this.imagesIndex}`)
+        this.imagesIndex++
+      }
+      return urls
+    },
+
+    resetSearch () {
+      this.select = null
+      this.entries = []
+      this.search = null
+    }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .pic {
+    display: flex;
+    flex-wrap: nowrap;
 
+    img {
+      max-width: 100%;
+    }
+  }
 </style>
