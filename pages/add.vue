@@ -40,6 +40,7 @@
               hide-details
               label="Entrez le nom d'une ville"
               outlined
+              :disabled="cities.length >= 3"
               @change="addCity"
             />
           </v-col>
@@ -53,7 +54,7 @@
             sm="4"
           >
             <v-card hover>
-              <v-card-title>{{ city.name }}</v-card-title>
+              <v-card-title>{{ index + 1 }} - {{ city.name }}</v-card-title>
               <v-container fluid>
                 <v-row justify="center">
                   <v-col
@@ -65,6 +66,19 @@
                     <v-img :src="image" :alt="city.name" aspect-ratio="1" />
                   </v-col>
                 </v-row>
+                <v-card-actions class="d-flex justify-space-between">
+                  <div>
+                    <v-btn icon outlined small @click="arrayMove(cities, index, index - 1)">
+                      <v-icon>mdi-chevron-left</v-icon>
+                    </v-btn>
+                    <v-btn class="ml-2" icon outlined small @click="arrayMove(cities, index, index + 1)">
+                      <v-icon>mdi-chevron-right</v-icon>
+                    </v-btn>
+                  </div>
+                  <v-btn color="error" icon small outlined @click="removeCity(index)">
+                    <v-icon>mdi-delete-outline</v-icon>
+                  </v-btn>
+                </v-card-actions>
               </v-container>
             </v-card>
           </v-col>
@@ -149,6 +163,16 @@ export default {
         this.imagesIndex++
       }
       return urls
+    },
+
+    arrayMove (array, fromIndex, toIndex) {
+      const element = array[fromIndex]
+      array.splice(fromIndex, 1)
+      array.splice(toIndex, 0, element)
+    },
+
+    removeCity (index) {
+      this.cities.splice(index, 1)
     },
 
     resetSearch () {
