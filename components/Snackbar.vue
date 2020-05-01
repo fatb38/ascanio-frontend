@@ -1,5 +1,5 @@
 <template>
-  <v-snackbar v-model="snackbarClient" dark :timeout="3000">
+  <v-snackbar v-model="snackbar" dark :timeout="3000">
     <div class="d-flex justify-start align-center">
       <v-icon v-if="status === 'error'" color="error">mdi-alert-circle</v-icon>
       <v-icon v-else color="success">mdi-check</v-icon>
@@ -13,14 +13,14 @@ export default {
   name: 'Snackbar',
   data () {
     return {
-      snackbarClient: false,
+      snackbar: false,
       message: null,
       status: null
     }
   },
 
   watch: {
-    snackbarClient (val) {
+    snackbar (val) {
       if (!val) {
         this.message = null
         this.status = null
@@ -29,14 +29,14 @@ export default {
   },
 
   created () {
-    this.$nuxt.$on('snackbarClient', ({ message, status }) => {
+    this.$nuxt.$on('show-snackbar', ({ message, status }) => {
       this.showSnackbar(message, status)
     })
   },
 
   methods: {
     showSnackbar (message, status) {
-      this.snackbarClient = true
+      this.snackbar = true
       this.message = message
       this.status = status
     }
