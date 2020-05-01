@@ -1,29 +1,73 @@
 <template>
   <div>
-    <h1 class="text-center">Nouvelle zone géographique</h1>
+    <div class="d-flex justify-space-between align-center pa-3">
+      <h1 class="text-center">Nouvelle zone</h1>
+      <v-btn
+        outlined
+        color="primary"
+      >
+        Valider
+      </v-btn>
+    </div>
     <v-container fluid>
       <v-form ref="form" v-model="valid">
-        <v-row>
-          <v-subheader class="title">Sélectionnez de 1 à 3 villes</v-subheader>
-          <v-autocomplete
-            v-model="select"
-            :loading="loading"
-            :items="items"
-            :search-input.sync="search"
-            color="secondary"
-            class="mx-4"
-            flat
-            hide-no-data
-            hide-details
-            label="Entrez le nom d'une ville"
-            solo-inverted
-            @change="addCity"
-          ></v-autocomplete>
+        <v-row no-gutters>
+          <v-col cols="12" sm="3">
+            <v-subheader class="title px-0">Nom de la zone</v-subheader>
+          </v-col>
+          <v-col cols="12" sm="5">
+            <v-text-field
+              v-model="name"
+              :rules="[v => !!v || 'Le nom est requis']"
+              label="Nom"
+              color="secondary"
+              outlined
+            />
+          </v-col>
         </v-row>
-        <v-row>
-          <div class="pic" v-for="(city, index) of cities" :key="index">
-            <img v-for="(image, index2) in city.images" :key="index2" :src="image" :alt="city.name">
-          </div>
+        <v-row no-gutters justify="start">
+          <v-col cols="12" sm="3">
+            <v-subheader class="title px-0">Sélectionnez de 1 à 3 villes</v-subheader>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-autocomplete
+              v-model="select"
+              :loading="loading"
+              :items="items"
+              :search-input.sync="search"
+              color="secondary"
+              hide-no-data
+              hide-details
+              label="Entrez le nom d'une ville"
+              outlined
+              @change="addCity"
+            />
+          </v-col>
+        </v-row>
+        <v-row class="mt-4">
+          <v-col
+            v-for="(city, index) of cities"
+            :key="index"
+            justify="space-between"
+            cols="12"
+            sm="4"
+          >
+            <v-card hover>
+              <v-card-title>{{ city.name }}</v-card-title>
+              <v-container fluid>
+                <v-row justify="center">
+                  <v-col
+                    v-for="(image, index2) in city.images"
+                    :key="index2"
+                    cols="2"
+                    sm="4"
+                  >
+                    <v-img :src="image" :alt="city.name" aspect-ratio="1" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </v-col>
         </v-row>
       </v-form>
     </v-container>
@@ -115,14 +159,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-  .pic {
-    display: flex;
-    flex-wrap: nowrap;
-
-    img {
-      max-width: 100%;
-    }
-  }
-</style>
