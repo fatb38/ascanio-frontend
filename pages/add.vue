@@ -2,10 +2,7 @@
   <div>
     <div class="d-flex justify-space-between align-center pa-3">
       <h1 class="text-center">Nouvelle zone</h1>
-      <v-btn
-        outlined
-        color="primary"
-      >
+      <v-btn outlined color="primary" @click="save">
         Valider
       </v-btn>
     </div>
@@ -179,6 +176,24 @@ export default {
       this.select = null
       this.entries = []
       this.search = null
+    },
+
+    async save () {
+      if (this.$refs.form.validate()) {
+        try {
+          await this.$axios.post('/api/areas/', this.area)
+          this.$nuxt.$emit('show-snackbar', {
+            message: 'Zone sauvegardée avec succès',
+            status: 'success'
+          })
+          await this.$router.push('/')
+        } catch (error) {
+          this.$nuxt.$emit('show-snackbar', {
+            message: 'Erreur avec le serveur, impossible de sauvegarder la nouvelle zone',
+            status: 'error'
+          })
+        }
+      }
     }
   }
 }
