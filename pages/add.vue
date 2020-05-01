@@ -182,16 +182,10 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           await this.$axios.post('/api/areas/', this.area)
-          this.$nuxt.$emit('show-snackbar', {
-            message: 'Zone sauvegardée avec succès',
-            status: 'success'
-          })
+          this.$emitSnackbarEvent('save-success')
           await this.$router.push('/')
         } catch (error) {
-          this.$nuxt.$emit('show-snackbar', {
-            message: 'Erreur avec le serveur, impossible de sauvegarder la nouvelle zone',
-            status: 'error'
-          })
+          this.$emitSnackbarEvent('error')
         }
       }
     }

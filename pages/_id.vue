@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Welcome home boy</h1>
+    <v-btn small outlined @click="$nuxt.$emit('snackbarClient', {message: 'hello error', status: 'error'})">TEST</v-btn>
   </div>
 </template>
 

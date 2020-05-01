@@ -1,9 +1,20 @@
 <template>
-  <v-snackbar v-model="snackbar" dark :timeout="3000">
+  <v-snackbar
+    v-model="snackbar"
+    :color="color"
+    :timeout="2000"
+    dark
+  >
     <div class="d-flex justify-start align-center">
-      <v-icon v-if="status === 'error'" color="error">mdi-alert-circle</v-icon>
-      <v-icon v-else color="success">mdi-check</v-icon>
-      <div class="ml-3">{{ message }}</div>
+      <v-icon v-if="status === 'error'">
+        mdi-alert-circle
+      </v-icon>
+      <v-icon v-else>
+        mdi-check
+      </v-icon>
+      <div class="ml-3">
+        {{ message }}
+      </div>
     </div>
   </v-snackbar>
 </template>
@@ -15,7 +26,8 @@ export default {
     return {
       snackbar: false,
       message: null,
-      status: null
+      status: null,
+      color: null
     }
   },
 
@@ -24,6 +36,7 @@ export default {
       if (!val) {
         this.message = null
         this.status = null
+        this.color = null
       }
     }
   },
@@ -39,6 +52,7 @@ export default {
       this.snackbar = true
       this.message = message
       this.status = status
+      this.color = status
     }
   }
 }

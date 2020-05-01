@@ -31,8 +31,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: ['~/plugins/snackbar'],
   /*
   ** Nuxt.js dev-modules
   */
@@ -71,7 +70,7 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.accent3,
           error: colors.red.darken2,
-          success: colors.green.accent3
+          success: colors.green.base
         }
       }
     }
