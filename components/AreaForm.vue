@@ -3,7 +3,7 @@
     <div class="d-sm-flex justify-space-between align-center pa-3">
       <slot />
       <div>
-        <v-btn outlined small color="primary" @click="save">
+        <v-btn outlined small color="primary" :disabled="!valid" @click="save">
           Valider
         </v-btn>
         <v-btn outlined small class="ml-3" @click="$router.push('/')">
@@ -37,9 +37,9 @@
               :loading="loading"
               :items="items"
               :search-input.sync="search"
+              :rules="[() => cities.length >= 1 || 'Au moins 1 ville est requise']"
               color="secondary"
               hide-no-data
-              hide-details
               label="Entrez le nom d'une ville"
               outlined
               :disabled="cities.length >= 3"
@@ -163,7 +163,16 @@ export default {
 
   methods: {
     addCity () {
-      if (this.cities.length < 3 && !this.cities.includes(this.select)) {
+      // checking if city is already selected
+      const citiesNames = this.cities.map((city) => {
+        return city.name
+      })
+      if (citiesNames.includes(this.select)) {
+        return
+      }
+
+      // allow 3 cities maximum
+      if (this.cities.length < 3) {
         this.cities.push({
           name: this.select,
           images: this.generateImagesUrl()
