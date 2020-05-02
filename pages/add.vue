@@ -2,9 +2,14 @@
   <div>
     <div class="d-flex justify-space-between align-center pa-3">
       <h1 class="text-center">Nouvelle zone</h1>
-      <v-btn outlined small color="primary" @click="save">
-        Valider
-      </v-btn>
+      <div>
+        <v-btn outlined small color="primary" @click="save">
+          Valider
+        </v-btn>
+        <v-btn outlined small class="ml-3" @click="$router.push('/')">
+          Retour
+        </v-btn>
+      </div>
     </div>
     <v-container fluid>
       <v-form ref="form" v-model="valid">

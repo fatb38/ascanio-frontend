@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar class="gradient" app>
       <v-btn v-if="path === 'add'" text to="/">
-        Retour
+        Liste des Zones
       </v-btn>
       <v-btn v-else text to="/add">
         Ajouter une Zone
