@@ -6,20 +6,18 @@
       <v-row v-if="areas.length > 0" justify="center">
         <v-col v-for="(area, index) in areas" :key="index" cols="12" sm="6" lg="4">
           <v-card hover>
-            <v-card-title class="pb-0 font-weight-regular">{{ area.name }}</v-card-title>
-            <v-container class="pt-0">
-              <v-row>
-                <v-subheader>Villes :
-                  <span v-for="(city, index2) in area.cities" :key="index2" class="city">
-                    {{ city.name }}
-                  </span>
-                </v-subheader>
-              </v-row>
-              <v-row class="mt-3" justify="end">
+            <v-card-title class="font-weight-regular">{{ area.name }}</v-card-title>
+            <v-card-text>
+              <span v-for="(city, index2) in area.cities" :key="index2" class="city">
+                {{ city.name }}
+              </span>
+            </v-card-text>
+            <v-card-actions>
+              <v-row justify="end">
                 <v-btn color="secondary" small outlined :to="'/'+area._id">détails</v-btn>
                 <v-btn class="mx-3" color="error" outlined small @click="deleteArea(area)">effacer</v-btn>
               </v-row>
-            </v-container>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -129,7 +127,7 @@ export default {
 <style scoped lang="scss">
   .city {
     display: inline-block;
-    margin-left: 4px;
+    margin-right: 4px;
 
     &:not(:last-child)::after {
       content: ' /';
