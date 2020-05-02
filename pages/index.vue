@@ -3,7 +3,7 @@
     <h1 class="text-center">Liste des zones géographiques</h1>
     <v-container fluid>
       <!-- areas display -->
-      <v-row v-if="areas.length > 0">
+      <v-row v-if="areas.length > 0" justify="center">
         <v-col v-for="(area, index) in areas" :key="index" cols="12" sm="6" lg="4">
           <v-card hover>
             <v-card-title class="pb-0 font-weight-regular">{{ area.name }}</v-card-title>

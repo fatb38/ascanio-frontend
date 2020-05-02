@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex justify-space-between align-center pa-3">
       <h1 class="text-center">Nouvelle zone</h1>
-      <v-btn outlined color="primary" @click="save">
+      <v-btn outlined small color="primary" @click="save">
         Valider
       </v-btn>
     </div>
@@ -42,11 +42,10 @@
             />
           </v-col>
         </v-row>
-        <v-row class="mt-4">
+        <v-row class="mt-4" justify="space-between">
           <v-col
             v-for="(city, index) of cities"
             :key="index"
-            justify="space-between"
             cols="12"
             sm="4"
           >
@@ -66,10 +65,12 @@
                 <v-card-actions class="d-flex justify-space-between">
                   <div>
                     <v-btn icon outlined small @click="arrayMove(cities, index, index - 1)">
-                      <v-icon>mdi-chevron-left</v-icon>
+                      <v-icon v-if="screenWidth >= 600">mdi-chevron-left</v-icon>
+                      <v-icon v-else>mdi-chevron-up</v-icon>
                     </v-btn>
                     <v-btn class="ml-2" icon outlined small @click="arrayMove(cities, index, index + 1)">
-                      <v-icon>mdi-chevron-right</v-icon>
+                      <v-icon v-if="screenWidth >= 600">mdi-chevron-right</v-icon>
+                      <v-icon v-else>mdi-chevron-down</v-icon>
                     </v-btn>
                   </div>
                   <v-btn color="error" icon small outlined @click="removeCity(index)">
@@ -89,7 +90,6 @@
 export default {
   data () {
     return {
-      name: null,
       valid: false,
       loading: false,
       entries: [],
@@ -101,16 +101,19 @@ export default {
   },
 
   computed: {
-    items () {
-      return this.entries.map((entry) => {
-        return entry.nom
-      })
-    },
     area () {
       return {
         name: this.name,
         cities: this.cities
       }
+    },
+    items () {
+      return this.entries.map((entry) => {
+        return entry.nom
+      })
+    },
+    screenWidth () {
+      return window.innerWidth
     }
   },
 
