@@ -2,9 +2,14 @@
   <div>
     <div class="d-flex justify-space-between align-center pa-3">
       <h1 class="text-center">{{ area.name }}</h1>
-      <v-btn outlined small color="primary">
-        Modifier
-      </v-btn>
+      <div>
+        <v-btn outlined small color="primary">
+          Modifier
+        </v-btn>
+        <v-btn outlined small class="ml-3" @click="$router.push('/')">
+          Retour
+        </v-btn>
+      </div>
     </div>
     <v-container fluid>
       <v-row class="mt-4" justify="space-around">
