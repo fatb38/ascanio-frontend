@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex justify-space-between align-center pa-3">
-      <h1 class="text-center">{{ area.name }}</h1>
+    <div class="d-sm-flex justify-space-between align-center pa-3">
+      <h1>{{ area.name }}</h1>
       <div>
         <v-btn outlined small color="primary">
           Modifier
