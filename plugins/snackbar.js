@@ -19,7 +19,7 @@ Vue.mixin({
           break
         case 'error':
           payload = {
-            message: 'Erreur avec le serveur, impossible de supprimer la zone',
+            message: 'Erreur avec le serveur',
             status: 'error'
           }
       }
