@@ -1,7 +1,35 @@
 <template>
   <div>
-    <h1>Welcome home boy</h1>
-    <v-btn small outlined @click="$nuxt.$emit('snackbarClient', {message: 'hello error', status: 'error'})">TEST</v-btn>
+    <div class="d-flex justify-space-between align-center pa-3">
+      <h1 class="text-center">{{ area.name }}</h1>
+      <v-btn outlined small color="primary">
+        Modifier
+      </v-btn>
+    </div>
+    <v-container fluid>
+      <v-row class="mt-4" justify="space-around">
+        <v-col
+          v-for="(city, index) of area.cities"
+          :key="index"
+          cols="12"
+        >
+          <v-card hover>
+            <v-card-title>{{ index + 1 }} - {{ city.name }}</v-card-title>
+            <v-container fluid>
+              <v-row justify="center">
+                <v-col
+                  v-for="(image, index2) in city.images"
+                  :key="index2"
+                  cols="2"
+                >
+                  <v-img :src="image" :alt="city.name" aspect-ratio="1"/>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -13,7 +41,7 @@ export default {
       if (status === 200 && data.name === 'CastError') {
         return error()
       }
-      return { scenario: data }
+      return { area: data }
     } catch (err) {
       error({ statusCode: 500 })
     }
