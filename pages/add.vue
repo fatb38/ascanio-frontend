@@ -42,7 +42,7 @@
             />
           </v-col>
         </v-row>
-        <v-row class="mt-4" justify="space-between">
+        <v-row class="mt-4">
           <v-col
             v-for="(city, index) of cities"
             :key="index"
@@ -95,8 +95,7 @@ export default {
       entries: [],
       search: null,
       select: null,
-      cities: [],
-      imagesIndex: 1
+      cities: []
     }
   },
 
@@ -159,8 +158,8 @@ export default {
     generateImagesUrl () {
       const urls = []
       for (let i = 0; i < 5; i++) {
-        urls.push(`https://picsum.photos/200?random=${this.imagesIndex}`)
-        this.imagesIndex++
+        const randomInt = Math.floor(Math.random() * (1000 - 1 + 1)) + 1
+        urls.push(`https://picsum.photos/200?random=${randomInt}`)
       }
       return urls
     },
