@@ -1,51 +1,36 @@
 <template>
   <div>
     <h1 class="text-center">Liste des zones géographiques</h1>
-    <v-container fluid>
-      <!-- areas display -->
-      <v-row v-if="areas.length > 0">
-        <v-col v-for="(area, index) in areas" :key="index" cols="12" sm="6" lg="4">
-          <v-card hover>
-            <v-card-title class="font-weight-regular">{{ area.name }}</v-card-title>
-            <v-card-text>
-              <span v-for="(city, index2) in area.cities" :key="index2" class="city">
-                {{ city.name }}
-              </span>
-            </v-card-text>
-            <v-card-actions>
-              <v-row justify="end">
-                <v-btn color="secondary" small outlined :to="'/'+area._id">détails</v-btn>
-                <v-btn class="mx-3" color="error" outlined small @click="deleteArea(area)">effacer</v-btn>
-              </v-row>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
+    <v-card>
+      <v-card-title>
+        <v-btn outlined small color="primary" to="/add">
+          Ajouter une zone
+        </v-btn>
+        <v-spacer />
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Recherche"
+          single-line
+          hide-details
+          :loading="$fetchState.pending"
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table :headers="headers" :items="areas" :search="search" no-data-text="Aucune zone enregistrée">
+        <template v-slot:item.cities="{ item }">
+          <span v-for="city of item.cities" :key="city.name" class="city">{{ city.name }}</span>
+        </template>
 
-      <!-- Spinner while fetching data -->
-      <v-row v-else-if="$fetchState.pending" justify="center">
-        <v-progress-circular
-          indeterminate
-          rotate="4"
-          size="18"
-          width="2"
-          color="secondary"
-        />
-      </v-row>
-
-      <!-- error -->
-      <v-row v-else-if="$fetchState.error" justify="center">
-        <v-col cols="12" class="text-center">
-          <div>Erreur avec le server</div>
-        </v-col>
-        <v-btn class="ml-3" small color="secondary" outlined @click="refresh">Rafraichir</v-btn>
-      </v-row>
-
-      <!-- no date -->
-      <v-row v-else justify="center">
-        <span>Aucune Zone Géographique enregistrée</span>
-      </v-row>
-    </v-container>
+        <template v-slot:item.actions="{ item }">
+          <v-btn small icon :to="'/'+item._id" title="détails">
+            <v-icon small>mdi-eye</v-icon>
+          </v-btn>
+          <v-btn small color="error" icon title="supprimer" @click="deleteArea(item)">
+            <v-icon small>mdi-delete</v-icon>
+          </v-btn>
+        </template>
+      </v-data-table>
+    </v-card>
 
     <!-- Delete alert modal box -->
     <v-dialog v-model="deleteAlert" max-width="600">
@@ -59,17 +44,8 @@
         <span class="font-weight-regular">Etes-vous sûr de vouloir supprimer {{ areaToDelete.name }} ?</span>
         <v-spacer />
         <v-btn text :disabled="pending" @click="close">Annuler</v-btn>
-        <v-btn color="error" :disabled="pending" text @click="deleteArea(areaToDelete)">
-          <div v-if="pending">
-            <v-progress-circular
-              indeterminate
-              rotate="4"
-              size="18"
-              width="2"
-              color="error"
-            />
-          </div>
-          <span v-else>Oui</span>
+        <v-btn color="error" :loading="pending" text @click="deleteArea(areaToDelete)">
+          Oui
         </v-btn>
       </v-alert>
     </v-dialog>
@@ -88,7 +64,13 @@ export default {
       areas: [],
       deleteAlert: false,
       pending: false,
-      areaToDelete: {}
+      areaToDelete: {},
+      search: '',
+      headers: [
+        { text: 'Nom', value: 'name' },
+        { text: 'Villes', value: 'cities', sortable: false },
+        { text: 'Actions', value: 'actions', align: 'right', sortable: false }
+      ]
     }
   },
 
