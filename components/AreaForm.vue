@@ -58,26 +58,21 @@
               <v-card-title>{{ index + 1 }} - {{ city.name }}</v-card-title>
               <v-container fluid>
                 <v-row justify="center">
-                  <v-col
-                    v-for="(image, index2) in city.images"
-                    :key="index2"
-                    cols="2"
-                    sm="4"
+                  <draggable
+                    :list="city.images"
+                    class="row wrap px-3 justify-center"
                   >
-                    <v-img :src="image" :alt="city.name" aspect-ratio="1"/>
-                  </v-col>
+                    <v-col
+                      v-for="image in city.images"
+                      :key="image"
+                      cols="4"
+                    >
+                      <v-img :src="image" :alt="city.name" aspect-ratio="1" />
+                    </v-col>
+                  </draggable>
                 </v-row>
-                <v-card-actions class="d-flex justify-space-between">
-                  <div>
-                    <v-btn icon outlined small @click="arrayMove(cities, index, index - 1)">
-                      <v-icon v-if="screenWidth >= 600">mdi-chevron-left</v-icon>
-                      <v-icon v-else>mdi-chevron-up</v-icon>
-                    </v-btn>
-                    <v-btn class="ml-2" icon outlined small @click="arrayMove(cities, index, index + 1)">
-                      <v-icon v-if="screenWidth >= 600">mdi-chevron-right</v-icon>
-                      <v-icon v-else>mdi-chevron-down</v-icon>
-                    </v-btn>
-                  </div>
+                <v-card-actions>
+                  <v-spacer />
                   <v-btn color="error" icon small outlined @click="removeCity(index)">
                     <v-icon>mdi-delete-outline</v-icon>
                   </v-btn>
@@ -92,8 +87,10 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 export default {
   name: 'AreaForm',
+  components: { draggable },
   props: {
     cities: {
       type: Array,
@@ -127,9 +124,6 @@ export default {
       return this.entries.map((entry) => {
         return entry.nom
       })
-    },
-    screenWidth () {
-      return window.innerWidth
     }
   },
 
@@ -190,12 +184,6 @@ export default {
       return urls
     },
 
-    arrayMove (array, fromIndex, toIndex) {
-      const element = array[fromIndex]
-      array.splice(fromIndex, 1)
-      array.splice(toIndex, 0, element)
-    },
-
     removeCity (index) {
       this.cities.splice(index, 1)
     },
@@ -214,7 +202,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

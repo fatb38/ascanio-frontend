@@ -26,7 +26,8 @@
                   <v-col
                     v-for="(image, index2) in city.images"
                     :key="index2"
-                    cols="2"
+                    cols="4"
+                    sm="2"
                   >
                     <v-img :src="image" :alt="city.name" aspect-ratio="1"/>
                   </v-col>
