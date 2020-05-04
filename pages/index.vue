@@ -9,6 +9,7 @@
         <v-spacer />
         <v-text-field
           v-model="search"
+          color="secondary"
           append-icon="mdi-magnify"
           label="Recherche"
           single-line
