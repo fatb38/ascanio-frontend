@@ -50,11 +50,17 @@
 import AreaForm from '../components/AreaForm'
 export default {
   components: { AreaForm },
+
+  validate ({ params }) {
+    // the id must contains 24 characters
+    return params.id.length === 24
+  },
+
   async asyncData ({ params, $axios, error }) {
     try {
       const { data, status } = await $axios.get(`/api/areas/${params.id}/`)
-      if (status === 200 && data.name === 'CastError') {
-        return error()
+      if (status === 200 && data === null) {
+        return error({ statusCode: 204 })
       }
       return { area: data }
     } catch (err) {

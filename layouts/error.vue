@@ -4,6 +4,9 @@
       <h1 v-if="error.statusCode === 404">
         {{ pageNotFound }}
       </h1>
+      <h1 v-else-if="error.statusCode === 204">
+        {{ wrongId }}
+      </h1>
       <h1 v-else>
         {{ otherError }}
       </h1>
@@ -25,16 +28,25 @@ export default {
   },
   data () {
     return {
-      pageNotFound: 'Zone introuvable',
+      pageNotFound: 'Page introuvable',
+      wrongId: 'Zone introuvable',
       otherError: 'Erreur du serveur'
     }
   },
   head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
+    let title
+    switch (this.error.statusCode) {
+      case 404:
+        title = this.pageNotFound
+        break
+      case 204:
+        title = this.wrongId
+        break
+      default:
+        title = this.otherError
+        break
     }
+    return { title }
   }
 }
 </script>
