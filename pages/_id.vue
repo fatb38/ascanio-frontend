@@ -73,7 +73,7 @@ export default {
       try {
         await this.$axios.put(`/api/areas/${this.area._id}`, area)
         this.$emitSnackbarEvent('save-success')
-        await this.$router.push('/')
+        this.editing = false
       } catch (error) {
         this.$emitSnackbarEvent('error')
       }
