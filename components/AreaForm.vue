@@ -129,10 +129,6 @@ export default {
 
   watch: {
     async search (val) {
-      if (val === null) {
-        return
-      }
-
       if (val.length === 0) {
         this.entries = []
         return
