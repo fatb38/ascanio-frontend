@@ -41,7 +41,7 @@
         elevation="3"
         class="mb-0"
       >
-        <span class="font-weight-regular">Etes-vous sûr de vouloir supprimer {{ areaToDelete.name }} ?</span>
+        <span class="font-weight-regular">Etes-vous sûr de vouloir supprimer la zone {{ areaToDelete.name }} ?</span>
         <v-spacer />
         <v-btn text :disabled="pending" @click="close">Annuler</v-btn>
         <v-btn color="error" :loading="pending" text @click="deleteArea(areaToDelete)">
