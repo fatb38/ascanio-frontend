@@ -1,12 +1,6 @@
 <template>
   <v-app>
     <v-app-bar class="gradient" app>
-      <v-btn v-if="path === 'add'" text to="/">
-        Liste des Zones
-      </v-btn>
-      <v-btn v-else text to="/add">
-        Ajouter une Zone
-      </v-btn>
       <v-spacer />
       <v-img src="/ascanio-logo.png" max-width="40px" />
     </v-app-bar>
@@ -23,11 +17,6 @@
 import Snackbar from '~/components/Snackbar'
 
 export default {
-  components: { Snackbar },
-  computed: {
-    path () {
-      return this.$route.name
-    }
-  }
+  components: { Snackbar }
 }
 </script>
