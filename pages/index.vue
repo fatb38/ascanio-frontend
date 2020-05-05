@@ -15,7 +15,7 @@
           single-line
           hide-details
           :loading="$fetchState.pending"
-        ></v-text-field>
+        />
       </v-card-title>
       <v-data-table :headers="headers" :items="areas" :search="search" no-data-text="Aucune zone enregistrée">
         <template v-slot:item.cities="{ item }">
@@ -77,7 +77,9 @@ export default {
 
   methods: {
     close () {
-      this.refresh()
+      if (this.pending) {
+        this.refresh()
+      }
       this.deleteAlert = false
       this.areaToDelete = {}
     },
