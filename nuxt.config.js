@@ -82,7 +82,7 @@ export default {
         .then((res) => {
           return res.data.map((area) => {
             return {
-              route: '/api/areas/' + area._id,
+              route: '/' + area._id,
               payload: area
             }
           })
