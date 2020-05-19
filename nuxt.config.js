@@ -75,6 +75,19 @@ export default {
       }
     }
   },
+  generate: {
+    routes () {
+      return axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
+        .then((res) => {
+          return res.data.map((area) => {
+            return {
+              route: '/api/areas/' + area._id,
+              payload: area
+            }
+          })
+        })
+    }
+  },
   /*
   ** Build configuration
   */

@@ -56,7 +56,10 @@ export default {
     return params.id.length === 24
   },
 
-  async asyncData ({ params, $axios, error }) {
+  async asyncData ({ params, $axios, payload, error }) {
+    if (payload) {
+      return { area: payload }
+    }
     try {
       const { data, status } = await $axios.get(`/api/areas/${params.id}/`)
       if (status === 200 && data === null) {
@@ -87,7 +90,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
