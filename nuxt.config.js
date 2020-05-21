@@ -2,7 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 import axios from 'axios'
 
 export default {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -16,7 +16,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Open+Sans:wght@400&display=swap' }
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Open+Sans:wght@400&display=swap'
+      }
     ]
   },
   /*
@@ -77,16 +80,46 @@ export default {
     }
   },
   generate: {
-    routes () {
-      return axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
-        .then((res) => {
-          return res.data.map((area) => {
-            return {
-              route: '/' + area._id,
-              payload: area
-            }
-          })
-        })
+    async routes () {
+      let query = await axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
+      const area = query.data.map((area) => {
+        return {
+          route: '/' + area._id,
+          payload: area
+        }
+      })
+
+      query = await axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
+      const area2 = query.data.map((area) => {
+        return {
+          route: '/test/' + area._id,
+          payload: area
+        }
+      })
+
+      return [...area, ...area2]
+      // const areas = axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
+      //   .then((res) => {
+      //     return res.data.map((area) => {
+      //       return {
+      //         route: '/' + area._id,
+      //         payload: area
+      //       }
+      //     })
+      //   })
+      // const areas2 = axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
+      //   .then((res) => {
+      //     return res.data.map((area) => {
+      //       return {
+      //         route: '/test/' + area._id,
+      //         payload: area
+      //       }
+      //     })
+      //   })
+      // return Promise.all([areas, areas2])
+      //   .then((values) => {
+      //     return [...values[0], ...values[1]]
+      //   })
     }
   },
   /*
