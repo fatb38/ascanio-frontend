@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-import axios from 'axios'
 
 export default {
   mode: 'universal',
@@ -77,49 +76,6 @@ export default {
           success: colors.green.base
         }
       }
-    }
-  },
-  generate: {
-    async routes () {
-      let query = await axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
-      const area = query.data.map((area) => {
-        return {
-          route: '/' + area._id,
-          payload: area
-        }
-      })
-
-      query = await axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
-      const area2 = query.data.map((area) => {
-        return {
-          route: '/test/' + area._id,
-          payload: area
-        }
-      })
-
-      return [...area, ...area2]
-      // const areas = axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
-      //   .then((res) => {
-      //     return res.data.map((area) => {
-      //       return {
-      //         route: '/' + area._id,
-      //         payload: area
-      //       }
-      //     })
-      //   })
-      // const areas2 = axios.get('https://ascanio-backend.herokuapp.com/api/areas/')
-      //   .then((res) => {
-      //     return res.data.map((area) => {
-      //       return {
-      //         route: '/test/' + area._id,
-      //         payload: area
-      //       }
-      //     })
-      //   })
-      // return Promise.all([areas, areas2])
-      //   .then((values) => {
-      //     return [...values[0], ...values[1]]
-      //   })
     }
   },
   /*

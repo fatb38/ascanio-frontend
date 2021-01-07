@@ -1,6 +1,6 @@
 # ascanio-frontend
 
-> My fantabulous Nuxt.js project
+Here is an example of a nuxt front app with Vuetify framework
 
 ## Build Setup
 
